@@ -67,10 +67,7 @@ export class userStore {
     }
   }
 
-  async authenticate(
-    phone: string,
-    password: string
-  ): Promise<User | null> {
+  async authenticate(phone: string, password: string): Promise<User | null> {
     try {
       const conn = await client.connect();
       const sql = 'SELECT * from users_table Where phone=($1)';
@@ -92,6 +89,4 @@ export class userStore {
       throw new Error(`Could not authenticate. Error: ${err}`);
     }
   }
-
-
 }

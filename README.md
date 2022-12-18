@@ -1,9 +1,19 @@
-how to setup and connect to the database:
-using a local postgres db using:
+1- Run db-migrate up to have required databses
 
-    "database": "storefront",
-    "user": "postgres",
-    "password": "postgres"
-    and "database":storefront_test for test
+.env variales:
 
-wors on port 3000 and database on port 5432
+POSTGRES_HOST=localhost
+POSTGRES_DB=storefront
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_TEST_DB=storefront_test
+ENV=dev
+BCRYPT_PASSWORD=store-pass 
+SALT_ROUNDS=10
+TOEKN_SECRET=project
+
+#scripts
+"build"
+"test"
+"prettier"
+"lint"

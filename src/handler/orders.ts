@@ -1,8 +1,9 @@
 import express, { Request, Response } from 'express';
-import { Order,OrderStore } from '../models/orders';
+import { Order, OrderStore } from '../models/orders';
 
 import dotenv from 'dotenv';
-
+import jwt from 'jsonwebtoken';
+import auth from '../middleware/autherization';
 dotenv.config();
 
 const store = new OrderStore();
@@ -14,12 +15,12 @@ export type Order_products = {
   productId: string;
 };
 
-
-
 const show = async (req: Request, res: Response): Promise<void> => {
   try {
     const order = await store.show(req.body.id);
-    res.json(order);
+    var token = jwt.sign({ user: order }, process.env.TOKEN_SECRET as string);
+    res.json(token);
+
 
   } catch (err) {
     res.status(404);
@@ -27,33 +28,29 @@ const show = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-
 const create = async (req: Request, res: Response): Promise<void> => {
   try {
     const order: Order = {
       status: req.body.status,
       usrID: req.body.usrID,
-      quantity: req.body.quantity,
-      productId: req.body.productId,
-
     };
 
-    const neworder = await store.create(order);
-    res.json(neworder);
-
+    const createOrdr = await store.create(order);
+    const token = jwt.sign(
+      { user: createOrdr },
+      process.env.TOKEN_SECRET as string
+    );
+    res.json(token);
   } catch (err) {
     res.status(400);
     res.json({ error: `enter correct order data, ERROR: ${err}` });
   }
 };
 
-
-
 const orders_routes = (app: express.Application): void => {
-
   app.get('/orders/:id', show);
 
-  app.post('/orders', create);
+  app.post('/orders', auth, create);
 };
 
 export default orders_routes;

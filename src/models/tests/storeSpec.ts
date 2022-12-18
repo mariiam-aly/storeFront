@@ -1,6 +1,6 @@
-import {User, userStore } from '../users';
-import {Order, OrderStore } from '../orders';
-import { Product, ProductStore} from '../products';
+import { User, userStore } from '../users';
+import { Order, OrderStore } from '../orders';
+import { Product, ProductStore } from '../products';
 
 const store3 = new ProductStore();
 const store2 = new OrderStore();
@@ -9,15 +9,13 @@ const store = new userStore();
 let createdProduct: Product;
 
 const order1: Order = {
-    status: 'active',
-    usrID: '1',
-    productId: '1',
-    quantity: 5,
-  };
-  const product: Product = {
-    name: 'Meat',
-    price: 55,
-  };
+  status: 'active',
+  usrID: '1',
+};
+const product: Product = {
+  name: 'Meat',
+  price: 55,
+};
 
 const user_test: User = {
   first_name: 'Mariam',
@@ -26,63 +24,52 @@ const user_test: User = {
   password: '123',
 };
 
-
-describe("user table", () => {
-    it('should have an index method', () => {
-      expect(store.index).toBeDefined();
-    });
-  
-    it('should have a show method', () => {
-      expect(store.show).toBeDefined();
-    });
-  
-    it('should have a create method', () => {
-      expect(store.create).toBeDefined();
-    });
-  
-  
-
-     
-        it('create user', async () => {
-          const res = await store.create(user_test);
-          expect(res.first_name).toEqual(user_test.first_name);
-          expect(res.last_name).toEqual(user_test.last_name);
-        /* let createdUser:User = res as User;
-          order1.usrID = createdUser.id as string;*/
-        });
-        it('authenticate user', async () => {
-          const res = (await store.authenticate(
-            user_test.phone,
-            user_test.password
-          )) as User;
-          expect(res.phone as string).toEqual(user_test.phone as string);
-          expect(res.first_name as string).toEqual(user_test.first_name as string);
-          expect(res.last_name as string).toEqual(user_test.last_name as string);
-        });
-    
-  
- 
+describe('user table', () => {
+  it('should have an index method', () => {
+    expect(store.index).toBeDefined();
   });
-
-  
-describe("order table", () => {
 
   it('should have a show method', () => {
     expect(store.show).toBeDefined();
   });
 
+  it('should have a create method', () => {
+    expect(store.create).toBeDefined();
+  });
+
+  it('create user', async () => {
+    const res = await store.create(user_test);
+    expect(res.first_name).toEqual(user_test.first_name);
+    expect(res.last_name).toEqual(user_test.last_name);
+    /* let createdUser:User = res as User;
+          order1.usrID = createdUser.id as string;*/
+  });
+  it('authenticate user', async () => {
+    const res = (await store.authenticate(
+      user_test.phone,
+      user_test.password
+    )) as User;
+    expect(res.phone as string).toEqual(user_test.phone as string);
+    expect(res.first_name as string).toEqual(user_test.first_name as string);
+    expect(res.last_name as string).toEqual(user_test.last_name as string);
+  });
+});
+
+describe('order table', () => {
+  it('should have a show method', () => {
+    expect(store.show).toBeDefined();
+  });
 
   it('create new order', async () => {
-      const res = await store2.create(order1);
-      expect(res.usrID as string).toBeDefined;
-      expect(res.status).toEqual(order1.status);
-    });
-   
-  it('user orders by user_id', async () => {
-      const res = await store2.show('1');
-      expect(res.status).toEqual('active');
-    });
+    const res = await store2.create(order1);
+    expect(res.usrID as string).toBeDefined;
+    expect(res.status).toEqual(order1.status);
+  });
 
+  it('user orders by user_id', async () => {
+    const res = await store2.show('1');
+    expect(res.status).toEqual('active');
+  });
 });
 
 describe('Product Model', () => {
@@ -93,7 +80,7 @@ describe('Product Model', () => {
     createdProduct = res as Product;
   });
   it('show product by ID', async () => {
- const res = await store3.show(createdProduct.id as string);
+    const res = await store3.show(createdProduct.id as string);
     expect(res.name).toEqual(createdProduct.name);
     expect(res.price).toEqual(createdProduct.price);
   });
