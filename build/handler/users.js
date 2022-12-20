@@ -47,8 +47,7 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             phone: req.body.phone,
         };
         const createUsr = yield store.create(user);
-        const token = jsonwebtoken_1.default.sign({ user: createUsr }, process.env.TOKEN_SECRET);
-        res.json(token);
+        res.json(createUsr);
     }
     catch (err) {
         res.status(400);
@@ -69,7 +68,7 @@ const authenticate = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 const users_routes = (app) => {
     app.get('/users', autherization_1.default, index);
     app.get('/users/:id', autherization_1.default, show);
-    app.post('/users', autherization_1.default, create);
+    app.post('/users', create);
     app.post('/authenticate', autherization_1.default, authenticate);
 };
 exports.default = users_routes;

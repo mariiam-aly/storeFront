@@ -1,6 +1,7 @@
 import { User, userStore } from '../users';
 import { Order, OrderStore } from '../orders';
 import { Product, ProductStore } from '../products';
+import Randomstring from 'randomstring';
 
 const store3 = new ProductStore();
 const store2 = new OrderStore();
@@ -10,7 +11,7 @@ let createdProduct: Product;
 
 const order1: Order = {
   status: 'active',
-  usrID: '1',
+  usrID: '15',
 };
 const product: Product = {
   name: 'Meat',
@@ -20,7 +21,7 @@ const product: Product = {
 const user_test: User = {
   first_name: 'Mariam',
   last_name: 'Aly',
-  phone: '01094883051',
+  phone: Randomstring.generate({ length: 12, charset: 'numeric' }) as string,
   password: '123',
 };
 
@@ -41,8 +42,7 @@ describe('user table', () => {
     const res = await store.create(user_test);
     expect(res.first_name).toEqual(user_test.first_name);
     expect(res.last_name).toEqual(user_test.last_name);
-    /* let createdUser:User = res as User;
-          order1.usrID = createdUser.id as string;*/
+ 
   });
   it('authenticate user', async () => {
     const res = (await store.authenticate(
@@ -67,7 +67,7 @@ describe('order table', () => {
   });
 
   it('user orders by user_id', async () => {
-    const res = await store2.show('1');
+    const res = await store2.show('15');
     expect(res.status).toEqual('active');
   });
 });

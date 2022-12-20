@@ -34,7 +34,6 @@ const create = async (req: Request, res: Response): Promise<void> => {
       password: req.body.password,
       phone: req.body.phone,
     };
-
     const createUsr = await store.create(user);
     const token = jwt.sign(
       { user: createUsr },
@@ -65,7 +64,7 @@ const authenticate = async (req: Request, res: Response): Promise<void> => {
 const users_routes = (app: express.Application): void => {
   app.get('/users', auth, index);
   app.get('/users/:id', auth, show);
-  app.post('/users', auth, create);
+  app.post('/users', create);
   app.post('/authenticate', auth, authenticate);
 };
 
