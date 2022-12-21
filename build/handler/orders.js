@@ -20,7 +20,7 @@ dotenv_1.default.config();
 const store = new orders_1.OrderStore();
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const order = yield store.show(req.body.id);
+        const order = yield store.show(req.params.id);
         var token = jsonwebtoken_1.default.sign({ user: order }, process.env.TOKEN_SECRET);
         res.json(token);
     }

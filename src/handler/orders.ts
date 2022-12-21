@@ -17,7 +17,7 @@ export type Order_products = {
 
 const show = async (req: Request, res: Response): Promise<void> => {
   try {
-    const order = await store.show(req.body.id);
+    const order = await store.show(req.params.id);
     var token = jwt.sign({ user: order }, process.env.TOKEN_SECRET as string);
     res.json(token);
 

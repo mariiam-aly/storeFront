@@ -17,6 +17,7 @@ const jwt_decode_1 = __importDefault(require("jwt-decode"));
 const index_1 = __importDefault(require("../../index"));
 const products_1 = require("../products");
 const orders_1 = require("../orders");
+const randomstring_1 = __importDefault(require("randomstring"));
 const request = (0, supertest_1.default)(index_1.default);
 const orderStore = new orders_1.OrderStore();
 const productStore = new products_1.ProductStore();
@@ -26,7 +27,7 @@ let token;
 const user_test = {
     first_name: 'Tarek',
     last_name: 'Hisham',
-    phone: '01028339283',
+    phone: randomstring_1.default.generate({ length: 12, charset: 'numeric' }),
     password: '123',
 };
 const order_prod = {
@@ -55,9 +56,11 @@ describe('Order routes ', () => {
         const res = yield request.post('/users').send(user_test);
         token = res.body;
         expect(res.status).toBe(200);
+        console.log(token);
         const decodedHeader = (0, jwt_decode_1.default)('Bearer ' + token);
-        order1.usrID = decodedHeader.id;
-        order2.usrID = decodedHeader.id;
+        /*
+            order1.usrID = decodedHeader.id as string;
+            order2.usrID = decodedHeader.id as string;*/
         createdProduct = (yield productStore.create(product));
         createdOrder = (yield orderStore.create(order1));
         order_prod.order_id = createdOrder.id;
@@ -65,14 +68,11 @@ describe('Order routes ', () => {
         expect(createdOrder.status).toEqual(order1.status);
     }));
     it('show', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield request.get(`/orders/:${order_prod.order_id}`).set(Object.assign({}, jsonHeaders));
+        const res = yield request.get(`/orders/${createdOrder.id}`).set(Object.assign({}, jsonHeaders));
         expect(res.status).toBe(200);
     }));
     it('create', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield request
-            .post('/orders')
-            .set(Object.assign(Object.assign({}, jsonHeaders), { Authorization: 'Bearer ' + token }))
-            .send(order2);
+        const res = yield request.post('/orders').set(Object.assign(Object.assign({}, jsonHeaders), { Authorization: 'Bearer ' + token })).send(order2);
         expect(res.status).toBe(200);
     }));
 });

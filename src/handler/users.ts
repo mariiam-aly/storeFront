@@ -7,8 +7,7 @@ const store = new userStore();
 const index = async (_req: Request, res: Response): Promise<void> => {
   try {
     const users = await store.index();
-    const token = jwt.sign({ user: users }, process.env.TOKEN_SECRET as string);
-    res.json(token);
+    res.json(users);
   } catch (err) {
     res.status(404);
     res.json({ error: `Couldn't find any records, ERROR: ${err}` });
@@ -17,9 +16,8 @@ const index = async (_req: Request, res: Response): Promise<void> => {
 
 const show = async (req: Request, res: Response): Promise<void> => {
   try {
-    const user = await store.show(req.body.id);
-    const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET as string);
-    res.json(token);
+    const user = await store.show(req.params.id);
+    res.json(user);
   } catch (err) {
     res.status(404);
     res.json({ error: `enter a correct phone and password, ERROR: ${err}` });

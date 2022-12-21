@@ -45,7 +45,7 @@ describe(' product routes ', () => {
     expect(res.status).toBe(200);
   });
   it('show', async () => {
-    const res = await request.get('/products');
+    const res = await request.get(`/products/${createdproduct.id}`);
     expect(res.status).toBe(200);
   });
 

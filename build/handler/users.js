@@ -19,8 +19,7 @@ const store = new users_1.userStore();
 const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield store.index();
-        const token = jsonwebtoken_1.default.sign({ user: users }, process.env.TOKEN_SECRET);
-        res.json(token);
+        res.json(users);
     }
     catch (err) {
         res.status(404);
@@ -29,9 +28,8 @@ const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield store.show(req.body.id);
-        const token = jsonwebtoken_1.default.sign({ user: user }, process.env.TOKEN_SECRET);
-        res.json(token);
+        const user = yield store.show(req.params.id);
+        res.json(user);
     }
     catch (err) {
         res.status(404);
@@ -47,7 +45,8 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             phone: req.body.phone,
         };
         const createUsr = yield store.create(user);
-        res.json(createUsr);
+        const token = jsonwebtoken_1.default.sign({ user: createUsr }, process.env.TOKEN_SECRET);
+        res.json(token);
     }
     catch (err) {
         res.status(400);

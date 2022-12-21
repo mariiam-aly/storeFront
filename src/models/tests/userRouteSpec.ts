@@ -51,7 +51,7 @@ describe(' user routes ', () => {
 
   it('show', async () => {
     const res = await request
-      .get('/users')
+      .get(`/users/${createduser.id}`)
       .set({ ...jsonHeaders, Authorization: 'Bearer ' + token });
 
     expect(res.status).toBe(200);

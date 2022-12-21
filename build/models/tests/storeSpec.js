@@ -8,17 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const users_1 = require("../users");
 const orders_1 = require("../orders");
 const products_1 = require("../products");
+const randomstring_1 = __importDefault(require("randomstring"));
 const store3 = new products_1.ProductStore();
 const store2 = new orders_1.OrderStore();
 const store = new users_1.userStore();
 let createdProduct;
 const order1 = {
     status: 'active',
-    usrID: '1',
+    usrID: '15',
 };
 const product = {
     name: 'Meat',
@@ -27,7 +31,7 @@ const product = {
 const user_test = {
     first_name: 'Mariam',
     last_name: 'Aly',
-    phone: '01094883051',
+    phone: randomstring_1.default.generate({ length: 12, charset: 'numeric' }),
     password: '123',
 };
 describe('user table', () => {
@@ -44,8 +48,6 @@ describe('user table', () => {
         const res = yield store.create(user_test);
         expect(res.first_name).toEqual(user_test.first_name);
         expect(res.last_name).toEqual(user_test.last_name);
-        /* let createdUser:User = res as User;
-              order1.usrID = createdUser.id as string;*/
     }));
     it('authenticate user', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = (yield store.authenticate(user_test.phone, user_test.password));
@@ -64,7 +66,7 @@ describe('order table', () => {
         expect(res.status).toEqual(order1.status);
     }));
     it('user orders by user_id', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield store2.show('1');
+        const res = yield store2.show('15');
         expect(res.status).toEqual('active');
     }));
 });

@@ -75,7 +75,7 @@ describe('Order routes ', () => {
   });
 
   it('show', async () => {
-    const res = await request.get(`/orders/:${order_prod.order_id}`).set({ ...jsonHeaders})
+    const res = await request.get(`/orders/${createdOrder.id}`).set({ ...jsonHeaders})
         expect(res.status).toBe(200);
       }
     );
