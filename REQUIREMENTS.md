@@ -33,8 +33,11 @@ Show '/users/:id' - GET
 Create '/users' - POST
 Authenticate '/authenticate' - POST
 
-tables:
-order: id, status, user_id 
-product: id, name, price
-user: id, first_name,last_name, phone, password 
-order products: id, quantity, order_id, product_id
+#tables:
+orders_table=> id:integer, status:character, user_id:bigint 
+
+products_table=> id:integer, name:character, price:integer
+
+users_table=> id:integer, first_name:character ,last_name:character, phone:character, password:character
+
+order_products=> id:integer, quantity:integer, order_id:bigint, product_id:bigint

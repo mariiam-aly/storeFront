@@ -11,7 +11,7 @@ let createdProduct: Product;
 
 const order1: Order = {
   status: 'active',
-  usrID: '15',
+  usrID: '3',
 };
 const product: Product = {
   name: 'Meat',
@@ -67,7 +67,7 @@ describe('order table', () => {
   });
 
   it('user orders by user_id', async () => {
-    const res = await store2.show('15');
+    const res = await store2.show('3');
     expect(res.status).toEqual('active');
   });
 });

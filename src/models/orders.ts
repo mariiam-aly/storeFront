@@ -17,6 +17,7 @@ export class OrderStore {
       const result = await conn.query(sql, [b.status, b.usrID]);
 
       const order = result.rows[0];
+      console.log(order)
       conn.release();
 
       return order;
@@ -27,7 +28,7 @@ export class OrderStore {
   async show(id: string): Promise<Order> {
     try {
       const sql =
-        "SELECT * FROM orders_table WHERE id=($1) and status='active'";
+        "SELECT * FROM orders_table WHERE user_id=($1) and status='active'";
       // @ts-ignore
       const conn = await client.connect();
 

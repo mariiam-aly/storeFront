@@ -56,7 +56,6 @@ describe('Order routes ', () => {
         const res = yield request.post('/users').send(user_test);
         token = res.body;
         expect(res.status).toBe(200);
-        console.log(token);
         const decodedHeader = (0, jwt_decode_1.default)('Bearer ' + token);
         /*
             order1.usrID = decodedHeader.id as string;

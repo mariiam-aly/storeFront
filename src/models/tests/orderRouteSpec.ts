@@ -59,7 +59,7 @@ describe('Order routes ', () => {
     const res = await request.post('/users').send(user_test);
     token = res.body;
     expect(res.status).toBe(200);
-   console.log(token)
+  
     const decodedHeader: User = jwt_decode('Bearer ' + token) as User;
 /*
     order1.usrID = decodedHeader.id as string;

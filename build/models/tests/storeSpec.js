@@ -22,7 +22,7 @@ const store = new users_1.userStore();
 let createdProduct;
 const order1 = {
     status: 'active',
-    usrID: '15',
+    usrID: '3',
 };
 const product = {
     name: 'Meat',
@@ -66,7 +66,7 @@ describe('order table', () => {
         expect(res.status).toEqual(order1.status);
     }));
     it('user orders by user_id', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield store2.show('15');
+        const res = yield store2.show('3');
         expect(res.status).toEqual('active');
     }));
 });

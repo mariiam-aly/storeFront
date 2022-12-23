@@ -1,4 +1,3 @@
-1- Run db-migrate up to have required databses
 
 .env variales:
 
