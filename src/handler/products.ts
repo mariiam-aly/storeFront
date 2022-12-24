@@ -33,12 +33,8 @@ const create = async (req: Request, res: Response): Promise<void> => {
     };
 
     const createProduct = await store.create(product);
-    const token = jwt.sign(
-      { user: createProduct },
-      process.env.TOKEN_SECRET as string
-    );
 
-    res.json(token);
+    res.json(createProduct);
   } catch (err) {
     res.status(400);
     res.json({ error: `enter correct product data, ERROR: ${err}` });

@@ -18,8 +18,8 @@ export type Order_products = {
 const show = async (req: Request, res: Response): Promise<void> => {
   try {
     const order = await store.show(req.params.id);
-    var token = jwt.sign({ user: order }, process.env.TOKEN_SECRET as string);
-    res.json(token);
+   
+    res.json(order);
 
 
   } catch (err) {
@@ -36,11 +36,8 @@ const create = async (req: Request, res: Response): Promise<void> => {
     };
 
     const createOrdr = await store.create(order);
-    const token = jwt.sign(
-      { user: createOrdr },
-      process.env.TOKEN_SECRET as string
-    );
-    res.json(token);
+ 
+    res.json(createOrdr);
   } catch (err) {
     res.status(400);
     res.json({ error: `enter correct order data, ERROR: ${err}` });

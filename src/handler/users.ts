@@ -51,8 +51,7 @@ const authenticate = async (req: Request, res: Response): Promise<void> => {
       req.body.password
     )) as User;
 
-    const token = jwt.sign(user as User, process.env.TOKEN_SECRET as string);
-    res.json(token);
+    res.json(user);
   } catch (error) {
     res.status(401);
     res.json({ error: 'enter a correct phone and password' });
